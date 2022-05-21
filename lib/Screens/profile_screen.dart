@@ -199,7 +199,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? email = prefs.getString("email");
     var resp = await Dio().get(
-        "http://idms.backend.eastdevs.com/api/drivers?filters[email][\$eq]=$email");
+        "https://idms.backend.eastdevs.com/api/drivers?filters[email][\$eq]=$email");
     print(resp.data["data"][0]["attributes"]["Name"]);
 
     driver = DriverModel(

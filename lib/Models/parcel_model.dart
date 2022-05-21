@@ -13,7 +13,7 @@ class ParcelModel {
   String parcelType;
   String size;
   String type;
-  String recievedBy = "";
+  String recievedByName = "";
   String recievedByNum = "";
   String recievedByEmail = "";
   String recievedByID = "";

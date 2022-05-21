@@ -188,7 +188,7 @@ class _RecpientDetailsPageState extends State<RecpientDetailsPage> {
                 padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
                 child: GestureDetector(
                   onTap: () {
-                    widget.parcelModel.recievedBy = nameController.text;
+                    widget.parcelModel.recievedByName = nameController.text;
                     widget.parcelModel.recievedByEmail = mailController.text;
                     widget.parcelModel.recievedByNum = numController.text;
                     widget.parcelModel.recievedByID = idController.text;

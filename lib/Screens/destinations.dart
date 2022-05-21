@@ -2,12 +2,9 @@ import 'package:fyp_driver/Models/parcel_model.dart';
 import 'package:fyp_driver/Screens/app_bar.dart';
 import 'package:fyp_driver/Screens/details_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:fyp_driver/Screens/welcome_page.dart';
 
 class DestinationsPage extends StatefulWidget {
-  List<ParcelModel> parcels;
-
-  DestinationsPage(this.parcels);
-
   @override
   _DestinationsPageState createState() => _DestinationsPageState();
 }
@@ -20,7 +17,7 @@ class _DestinationsPageState extends State<DestinationsPage> {
         preferredSize: const Size.fromHeight(100),
         child: MyAppBar("Destinations", true),
       ),
-      body: (widget.parcels.length == 0)
+      body: (Welcome.scheduledParcelList.isEmpty)
           ? Center(
               child: Container(
               child: Text("No Deliveries"),
@@ -42,7 +39,7 @@ class _DestinationsPageState extends State<DestinationsPage> {
                           wordSpacing: 1.2),
                     ),
                   ),
-                  tile(widget.parcels[0]),
+                  tile(Welcome.scheduledParcelList[0]),
                   const Padding(
                     padding: EdgeInsets.fromLTRB(10, 5, 5, 5),
                     child: Text(
@@ -56,9 +53,9 @@ class _DestinationsPageState extends State<DestinationsPage> {
                   ),
                   Expanded(
                     child: ListView.builder(
-                        itemCount: widget.parcels.length - 1,
+                        itemCount: Welcome.scheduledParcelList.length - 1,
                         itemBuilder: (context, index) {
-                          return tile(widget.parcels[index + 1]);
+                          return tile(Welcome.scheduledParcelList[index + 1]);
                         }),
                   )
                 ],

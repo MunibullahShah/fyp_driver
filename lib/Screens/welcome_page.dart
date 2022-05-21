@@ -6,10 +6,15 @@ import '../login_page.dart';
 import 'home.dart';
 
 class Welcome extends StatefulWidget {
-  const Welcome({Key? key}) : super(key: key);
+  String driverID;
+
+  static List<ParcelModel> deliveredParcelList = [];
+  static List<ParcelModel> scheduledParcelList = [];
 
   @override
   State<Welcome> createState() => _WelcomeState();
+
+  Welcome(this.driverID);
 }
 
 class _WelcomeState extends State<Welcome> {
@@ -19,8 +24,6 @@ class _WelcomeState extends State<Welcome> {
   }
 
   bool isLoading = false;
-  List<ParcelModel> deliveredParcelList = [];
-  List<ParcelModel> scheduledParcelList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -147,11 +150,12 @@ class _WelcomeState extends State<Welcome> {
   }
 
   getData() async {
-    // var response =
-    //     await Dio().get("https://idms.backend.eastdevs.com/api/routes/3");
+    var resp = await Dio().get(
+        "https://idms.backend.eastdevs.com/api/routes?filters[driver][id][\$eq]=${widget.driverID}");
+    String routeID = resp.data["data"][0]["id"].toString();
 
     var response = await Dio().get(
-        "https://idms.backend.eastdevs.com/api/parcels?filters[route][id][\$eq]=1");
+        "https://idms.backend.eastdevs.com/api/parcels?filters[route][id][\$eq]=$routeID");
     print(response.data['data'][0]);
     response.data['data'].forEach((e) {
       ParcelModel parcel = ParcelModel(
@@ -174,19 +178,19 @@ class _WelcomeState extends State<Welcome> {
           sendingDate: '',
           deliveryType: e["attributes"]["deliveryType"]);
       if (parcel.status == "Delivered") {
-        deliveredParcelList.add(parcel);
+        Welcome.deliveredParcelList.add(parcel);
       } else {
-        scheduledParcelList.add(parcel);
+        Welcome.scheduledParcelList.add(parcel);
       }
     });
 
-    deliveredParcelList.sort((p1, p2) {
+    Welcome.deliveredParcelList.sort((p1, p2) {
       return Comparable.compare(p1.destinationNo, p2.destinationNo);
     });
-    scheduledParcelList.sort((p1, p2) {
+    Welcome.scheduledParcelList.sort((p1, p2) {
       return Comparable.compare(p1.destinationNo, p2.destinationNo);
     });
-    deliveredParcelList.forEach((element) {
+    Welcome.deliveredParcelList.forEach((element) {
       print(element.destinationNo);
     });
     setState(() {
@@ -194,8 +198,7 @@ class _WelcomeState extends State<Welcome> {
     });
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (builder) => HomeScreen(
-            3, "munib@gmail.com", deliveredParcelList, scheduledParcelList),
+        builder: (builder) => HomeScreen(),
       ),
     );
   }

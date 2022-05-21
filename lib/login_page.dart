@@ -228,15 +228,19 @@ class _LoginPageState extends State<LoginPage> {
       print(response.data);
       if (response.statusCode == 200) {
         var resp = await Dio().get(
-            "http://idms.backend.eastdevs.com/api/drivers?filters[email][\$eq]=$email");
+            "https://idms.backend.eastdevs.com/api/drivers?filters[email][\$eq]=$email");
         if (resp.statusCode == 200) {
           print("Email: $email");
           prefs.setString("email", email);
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (builder) => Welcome(),
-            ),
-          );
+          prefs.setInt("driverID", resp.data['data'][0]["id"]);
+          print("${resp.data['data'][0]["id"]}");
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    Welcome(resp.data['data'][0]["id"].toString()),
+              ),
+              (route) => false);
         }
       }
     } catch (e) {

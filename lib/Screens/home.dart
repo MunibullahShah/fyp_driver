@@ -1,18 +1,13 @@
-import 'package:dio/dio.dart';
 import 'package:fyp_driver/Models/parcel_model.dart';
-import 'package:fyp_driver/Screens/Destinations.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp_driver/Screens/delivered_screen.dart';
+import 'package:fyp_driver/Screens/destinations.dart';
 
 class HomeScreen extends StatefulWidget {
-  int routID;
-  String email;
-  List<ParcelModel> scheduleList;
-  List<ParcelModel> deliveredList;
-  HomeScreen(this.routID, this.email, this.deliveredList, this.scheduleList);
-
   @override
   _HomeScreenState createState() => _HomeScreenState();
+
+  HomeScreen();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -22,8 +17,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    screen.add(DestinationsPage(widget.scheduleList));
-    screen.add(DeliveredScreen(widget.deliveredList));
+    screen.add(DestinationsPage());
+    screen.add(DeliveredScreen());
     super.initState();
   }
 
