@@ -24,6 +24,7 @@ class _WelcomeState extends State<Welcome> {
   }
 
   bool isLoading = false;
+  bool isFound = true;
 
   @override
   Widget build(BuildContext context) {
@@ -35,115 +36,142 @@ class _WelcomeState extends State<Welcome> {
               ? Center(
                   child: CircularProgressIndicator(),
                 )
-              : Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Image(
-                      image: AssetImage("assets/pics/aaaa.png"),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Text(
-                      "WORK HARD.",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Satisfy',
-                          fontSize: 40),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    const Text(
-                      "Welcome back.",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w300),
-                    ),
-                    Expanded(
-                      child: Container(),
-                    ),
-                    /*Container(
-                      width: 99,
-                      height: 60,
-                      decoration: const BoxDecoration(
-                        color: signInButton,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            bottomRight: Radius.circular(20)),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 6.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            getData();
-                            setState(() {
-                              isLoading = true;
-                            });
-                          },
-                          child: const Text(
-                            'Start Delivering',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w400),
-                          ),
+              : isFound
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 20,
                         ),
-                      ),
-                    ),*/
-                    Container(
-                      child: const Center(
-                        child: Text(
-                          "INTELLIGENT DELIVERY MANAGEMENT SYSTEM",
+                        Image(
+                          image: AssetImage("assets/pics/aaaa.png"),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const Text(
+                          "WORK HARD.",
                           style: TextStyle(
-                              color: Color.fromRGBO(255, 214, 77, 1),
-                              letterSpacing: 1.2,
-                              wordSpacing: 1.2,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 8),
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Satisfy',
+                              fontSize: 40),
                         ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 5, 20, 20),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 60,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        const SizedBox(
+                          height: 30,
                         ),
-                        child: Center(
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                isLoading = true;
-                              });
-                              getData();
-                              setState(() {
-                                isLoading = false;
-                              });
-                            },
-                            child: const Text(
-                              'Start Deliveries',
-                              textAlign: TextAlign.center,
+                        const Text(
+                          "Welcome back.",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w300),
+                        ),
+                        Expanded(
+                          child: Container(),
+                        ),
+                        Container(
+                          child: const Center(
+                            child: Text(
+                              "INTELLIGENT DELIVERY MANAGEMENT SYSTEM",
                               style: TextStyle(
-                                  color: Color.fromRGBO(31, 30, 39, 1),
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold),
+                                  color: Color.fromRGBO(255, 214, 77, 1),
+                                  letterSpacing: 1.2,
+                                  wordSpacing: 1.2,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 8),
                             ),
                           ),
                         ),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 5, 20, 20),
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: 60,
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                            ),
+                            child: Center(
+                              child: GestureDetector(
+                                onTap: () {
+                                  isLoading = true;
+                                  setState(() {});
+                                  getData();
+                                },
+                                child: const Text(
+                                  'Start Deliveries',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: Color.fromRGBO(31, 30, 39, 1),
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
                     )
-                  ],
-                ),
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Image(
+                          image: AssetImage("assets/pics/aaaa.png"),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const Text(
+                          "WORK HARD.",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Satisfy',
+                              fontSize: 40),
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        const Text(
+                          "Welcome back.",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w300),
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        const Text(
+                          "No Deliveries for now",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w300),
+                        ),
+                        Expanded(
+                          child: Container(),
+                        ),
+                        Container(
+                          child: const Center(
+                            child: Text(
+                              "INTELLIGENT DELIVERY MANAGEMENT SYSTEM",
+                              style: TextStyle(
+                                  color: Color.fromRGBO(255, 214, 77, 1),
+                                  letterSpacing: 1.2,
+                                  wordSpacing: 1.2,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 8),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
         ),
       ),
     );
@@ -152,8 +180,13 @@ class _WelcomeState extends State<Welcome> {
   getData() async {
     var resp = await Dio().get(
         "https://idms.backend.eastdevs.com/api/routes?filters[driver][id][\$eq]=${widget.driverID}");
-    String routeID = resp.data["data"][0]["id"].toString();
-
+    String routeID = resp.data["data"][0]["id"] == null
+        ? ""
+        : resp.data["data"][0]["id"].toString();
+    if (routeID == "") {
+      isFound = false;
+      return;
+    }
     var response = await Dio().get(
         "https://idms.backend.eastdevs.com/api/parcels?filters[route][id][\$eq]=$routeID");
     print(response.data['data'][0]);
@@ -178,9 +211,17 @@ class _WelcomeState extends State<Welcome> {
           sendingDate: '',
           deliveryType: e["attributes"]["deliveryType"]);
       if (parcel.status == "Delivered") {
-        Welcome.deliveredParcelList.add(parcel);
+        {
+          if (!Welcome.deliveredParcelList
+              .any((element) => (element.id == parcel.id))) {
+            Welcome.deliveredParcelList.add(parcel);
+          }
+        }
       } else {
-        Welcome.scheduledParcelList.add(parcel);
+        if (!Welcome.scheduledParcelList
+            .any((element) => (element.id == parcel.id))) {
+          Welcome.scheduledParcelList.add(parcel);
+        }
       }
     });
 
@@ -189,9 +230,6 @@ class _WelcomeState extends State<Welcome> {
     });
     Welcome.scheduledParcelList.sort((p1, p2) {
       return Comparable.compare(p1.destinationNo, p2.destinationNo);
-    });
-    Welcome.deliveredParcelList.forEach((element) {
-      print(element.destinationNo);
     });
     setState(() {
       isLoading = false;

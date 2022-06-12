@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fyp_driver/Screens/welcome_page.dart';
 import 'package:modal_progress_hud_alt/modal_progress_hud_alt.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -245,6 +246,7 @@ class _LoginPageState extends State<LoginPage> {
       }
     } catch (e) {
       print(e);
+      Fluttertoast.showToast(msg: "Login Failed");
     }
     setState(() {
       isLoading = false;
