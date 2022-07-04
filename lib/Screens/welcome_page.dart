@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:fyp_driver/Screens/profile_screen.dart';
 
 import '../Models/parcel_model.dart';
 import '../login_page.dart';
@@ -22,7 +21,6 @@ class _WelcomeState extends State<Welcome> {
   @override
   void initState() {
     super.initState();
-    getProfileImage();
   }
 
   bool isLoading = false;
@@ -180,7 +178,15 @@ class _WelcomeState extends State<Welcome> {
   }
 
   getData() async {
-
+    var resp = await Dio().get(
+        "https://idms.backend.eastdevs.com/api/routes?filters[driver][id][\$eq]=${widget.driverID}");
+    String routeID = resp.data["data"][0]["id"] == null
+        ? ""
+        : resp.data["data"][0]["id"].toString();
+    if (routeID == "") {
+      isFound = false;
+      return;
+    }
     var response = await Dio().get(
         "https://idms.backend.eastdevs.com/api/parcels?filters[route][id][\$eq]=$routeID");
     print(response.data['data'][0]);
@@ -204,10 +210,13 @@ class _WelcomeState extends State<Welcome> {
               : int.parse(e["attributes"]["destinationNo"]),
           sendingDate: '',
           deliveryType: e["attributes"]["deliveryType"]);
-
-      if (parcel.status == "Delivered" || parcel.status == "Failed") {
-        deliveredParcelList.add(parcel);
-
+      if (parcel.status == "Delivered") {
+        {
+          if (!Welcome.deliveredParcelList
+              .any((element) => (element.id == parcel.id))) {
+            Welcome.deliveredParcelList.add(parcel);
+          }
+        }
       } else {
         if (!Welcome.scheduledParcelList
             .any((element) => (element.id == parcel.id))) {
@@ -230,14 +239,5 @@ class _WelcomeState extends State<Welcome> {
         builder: (builder) => HomeScreen(),
       ),
     );
-  }
-
-  Future<void> getProfileImage() async {
-    var response = await Dio().get(
-        "https://idms.backend.eastdevs.com/api/drivers?filters[email][\$eq]=${LoginPage.driver.Email}&populate=image");
-
-    EditProfilePage.profilePic = "https://idms.backend.eastdevs.com" +
-        response.data["data"][0]["attributes"]["image"]["data"]["attributes"]
-            ["formats"]["thumbnail"]["url"];
   }
 }

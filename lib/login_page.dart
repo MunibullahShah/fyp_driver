@@ -2,37 +2,12 @@ import 'package:dio/dio.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
-import 'package:fyp_driver/Models/driver_model.dart';
-
 import 'package:fyp_driver/Screens/welcome_page.dart';
-import 'package:fyp_driver/forget_page.dart';
 import 'package:modal_progress_hud_alt/modal_progress_hud_alt.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
-  static DriverModel driver = DriverModel(
-      "id",
-      "Name",
-      "Email",
-      "password",
-      "PhoneNo",
-      "Age",
-      "Male",
-      "Nic",
-      "Address",
-      "createdAt",
-      "updatedAt",
-      "publishedAt",
-      "availableOrUnavailableStatus",
-      "liscenceNo",
-      "q1",
-      "q2",
-      "q3",
-      "a1",
-      "a2",
-      "a3");
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -184,28 +159,6 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (builder) => ForgetPage()));
-                    },
-                    child: Container(
-                      child: const Center(
-                        child: Text(
-                          "Forget password ?",
-                          style: TextStyle(
-                              color: Colors.white,
-                              letterSpacing: 1.2,
-                              wordSpacing: 1.2,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12),
-                        ),
-                      ),
-                    ),
-                  ),
                   Expanded(child: Container()),
                   Container(
                     child: const Center(
@@ -266,30 +219,34 @@ class _LoginPageState extends State<LoginPage> {
       isLoading = true;
     });
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String password = passController.text;
+    String email = emailController.text;
 
     try {
-      var resp = await Dio().get(
-          "https://idms.backend.eastdevs.com/api/drivers?filters[email][\$eq]=${emailController.text}&filters[password][\$eq]=${passController.text}");
-      if (resp.statusCode == 200) {
-        if (resp.data["meta"]["pagination"]["total"] != 0) {
-          print(resp.data["data"][0]);
-          LoginPage.driver = DriverModel.fromMap(
-              resp.data["data"][0]["id"].toString(),
-              resp.data["data"][0]["attributes"]);
-          print(LoginPage.driver.Email);
-          prefs.setString("email", emailController.text);
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (builder) => Welcome(),
-            ),
-          );
-        } else {
-          Fluttertoast.showToast(msg: "Please check username and password");
+      var response = await Dio().post(
+          "https://idms.backend.eastdevs.com/api/auth/local",
+          data: {"identifier": email, "password": password});
+      print(response.data);
+      if (response.statusCode == 200) {
+        var resp = await Dio().get(
+            "https://idms.backend.eastdevs.com/api/drivers?filters[email][\$eq]=$email");
+        if (resp.statusCode == 200) {
+          print("Email: $email");
+          prefs.setString("email", email);
+          prefs.setInt("driverID", resp.data['data'][0]["id"]);
+          print("${resp.data['data'][0]["id"]}");
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    Welcome(resp.data['data'][0]["id"].toString()),
+              ),
+              (route) => false);
         }
       }
     } catch (e) {
-      Fluttertoast.showToast(msg: e.toString());
-
+      print(e);
+      Fluttertoast.showToast(msg: "Login Failed");
     }
     setState(() {
       isLoading = false;
