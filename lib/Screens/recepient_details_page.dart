@@ -213,6 +213,7 @@ class _RecpientDetailsPageState extends State<RecpientDetailsPage> {
                           ),
                         ),
                       ),
+
                     ),
                   ),
                   Expanded(

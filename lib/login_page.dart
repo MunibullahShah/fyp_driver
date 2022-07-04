@@ -2,7 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:fyp_driver/Models/driver_model.dart';
+
 import 'package:fyp_driver/Screens/welcome_page.dart';
 import 'package:fyp_driver/forget_page.dart';
 import 'package:modal_progress_hud_alt/modal_progress_hud_alt.dart';
@@ -287,6 +289,7 @@ class _LoginPageState extends State<LoginPage> {
       }
     } catch (e) {
       Fluttertoast.showToast(msg: e.toString());
+
     }
     setState(() {
       isLoading = false;

@@ -229,6 +229,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   getEmailandData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? email = prefs.getString("email");
+
     try {
       var resp = await Dio().get(
           "https://idms.backend.eastdevs.com/api/drivers?filters[email][\$eq]=${emailController.text}&filters[password][\$eq]=${passController.text}");

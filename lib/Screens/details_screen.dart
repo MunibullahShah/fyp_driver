@@ -187,7 +187,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
             GestureDetector(
               onTap: () {
                 openMap(
-                    widget.parcelModel.latitude, widget.parcelModel.latitude);
+                    widget.parcelModel.latitude, widget.parcelModel.longitude);
               },
               child: button("Start Ride", widget.parcelModel.address),
             ),
@@ -288,7 +288,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   static Future<void> openMap(double latitude, double longitude) async {
     String googleUrl =
-        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+        'https://www.google.com/maps/search/?api=1&query=$longitude,$latitude';
 
     await launchUrl(Uri.parse(googleUrl));
 

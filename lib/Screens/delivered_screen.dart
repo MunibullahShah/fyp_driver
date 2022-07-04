@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:fyp_driver/Models/parcel_model.dart';
 import 'package:fyp_driver/Screens/details_screen.dart';
 import 'package:fyp_driver/Screens/app_bar.dart';
+import 'package:fyp_driver/Screens/welcome_page.dart';
 
 class DeliveredScreen extends StatefulWidget {
-  List<ParcelModel> parcels;
-
-  DeliveredScreen(this.parcels);
-
   @override
   State<DeliveredScreen> createState() => _DeliveredScreenState();
 }
@@ -35,9 +32,9 @@ class _DeliveredScreenState extends State<DeliveredScreen> {
             ),
             Expanded(
               child: ListView.builder(
-                  itemCount: widget.parcels.length,
+                  itemCount: Welcome.deliveredParcelList.length,
                   itemBuilder: (context, index) {
-                    return tile(widget.parcels[index]);
+                    return tile(Welcome.deliveredParcelList[index]);
                   }),
             )
           ],
@@ -103,8 +100,9 @@ class _DeliveredScreenState extends State<DeliveredScreen> {
               padding: const EdgeInsets.all(10.0),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
+                  var parce = Navigator.of(context).push(MaterialPageRoute(
                       builder: (builder) => DetailsScreen(parcel)));
+                  print(parce);
                 },
                 child: Column(
                   children: [
