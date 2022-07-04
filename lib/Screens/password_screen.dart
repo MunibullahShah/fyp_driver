@@ -2,46 +2,22 @@ import 'package:dio/dio.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:fyp_driver/Models/driver_model.dart';
-import 'package:fyp_driver/Screens/welcome_page.dart';
 import 'package:fyp_driver/forget_page.dart';
 import 'package:modal_progress_hud_alt/modal_progress_hud_alt.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
-  static DriverModel driver = DriverModel(
-      "id",
-      "Name",
-      "Email",
-      "password",
-      "PhoneNo",
-      "Age",
-      "Male",
-      "Nic",
-      "Address",
-      "createdAt",
-      "updatedAt",
-      "publishedAt",
-      "availableOrUnavailableStatus",
-      "liscenceNo",
-      "q1",
-      "q2",
-      "q3",
-      "a1",
-      "a2",
-      "a3");
+class PasswordScreen extends StatefulWidget {
+  const PasswordScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<PasswordScreen> createState() => _PasswordScreenState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _PasswordScreenState extends State<PasswordScreen> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  TextEditingController emailController = TextEditingController();
-
-  TextEditingController passController = TextEditingController();
+  TextEditingController q1Controller = TextEditingController();
+  TextEditingController q2Controller = TextEditingController();
+  TextEditingController q3Controller = TextEditingController();
 
   bool isLoading = false;
 
@@ -66,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 20,
                   ),
                   const Text(
-                    "Let's sign you in .",
+                    "Let's reset password .",
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
@@ -77,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 30,
                   ),
                   const Text(
-                    "Welcome back.",
+                    "Don't worry! It won't take long.",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 25,
@@ -87,14 +63,14 @@ class _LoginPageState extends State<LoginPage> {
                     height: 5,
                   ),
                   const Text(
-                    "You have been missed!",
+                    "Enter answers..",
                     style: TextStyle(color: Colors.white, fontSize: 25),
                   ),
                   const SizedBox(
                     height: 30,
                   ),
                   TextFormField(
-                    controller: emailController,
+                    controller: q1Controller,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Required';
@@ -106,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       label: Text(
-                        "Email",
+                        "Answer",
                         style: TextStyle(color: Colors.grey.shade500),
                       ),
                       fillColor: Color.fromRGBO(58, 57, 62, 0.4),
@@ -138,20 +114,22 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 30,
                   ),
                   TextFormField(
-                    controller: passController,
+                    controller: q2Controller,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Required';
                       }
+                      if (!EmailValidator.validate(value)) {
+                        return "Enter valid Email";
+                      }
                     },
-                    obscureText: true,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       label: Text(
-                        "Password",
+                        "Confirm Password",
                         style: TextStyle(color: Colors.grey.shade500),
                       ),
                       fillColor: Color.fromRGBO(58, 57, 62, 0.4),
@@ -183,26 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (builder) => ForgetPage()));
-                    },
-                    child: Container(
-                      child: const Center(
-                        child: Text(
-                          "Forget password ?",
-                          style: TextStyle(
-                              color: Colors.white,
-                              letterSpacing: 1.2,
-                              wordSpacing: 1.2,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12),
-                        ),
-                      ),
-                    ),
+                    height: 30,
                   ),
                   Expanded(child: Container()),
                   Container(
@@ -222,13 +181,7 @@ class _LoginPageState extends State<LoginPage> {
                     padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                     child: GestureDetector(
                       onTap: () {
-                        setState(() {
-                          isLoading = true;
-                        });
-                        login();
-
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //     builder: (builder) => HomeScreen()));
+                        Fluttertoast.showToast(msg: "Answers does not match");
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width,
@@ -239,7 +192,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         child: Center(
                           child: const Text(
-                            'Sign In',
+                            'Next',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Color.fromRGBO(31, 30, 39, 1),
@@ -258,41 +211,4 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
-  login() async {
-    setState(() {
-      isLoading = true;
-    });
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    try {
-      var resp = await Dio().get(
-          "https://idms.backend.eastdevs.com/api/drivers?filters[email][\$eq]=${emailController.text}&filters[password][\$eq]=${passController.text}");
-      if (resp.statusCode == 200) {
-        if (resp.data["meta"]["pagination"]["total"] != 0) {
-          print(resp.data["data"][0]);
-          LoginPage.driver = DriverModel.fromMap(
-              resp.data["data"][0]["id"].toString(),
-              resp.data["data"][0]["attributes"]);
-          print(LoginPage.driver.Email);
-          prefs.setString("email", emailController.text);
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (builder) => Welcome(),
-            ),
-          );
-        } else {
-          Fluttertoast.showToast(msg: "Please check username and password");
-        }
-      }
-    } catch (e) {
-      Fluttertoast.showToast(msg: e.toString());
-    }
-    setState(() {
-      isLoading = false;
-    });
-  }
 }
-
-const Color signInButton = Color(0xFF024335);
-const Color hintText = Color(0xFFB4B4B4);

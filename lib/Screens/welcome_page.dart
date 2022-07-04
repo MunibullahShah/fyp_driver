@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fyp_driver/Screens/profile_screen.dart';
 
 import '../Models/parcel_model.dart';
 import '../login_page.dart';
@@ -16,6 +17,7 @@ class _WelcomeState extends State<Welcome> {
   @override
   void initState() {
     super.initState();
+    getProfileImage();
   }
 
   bool isLoading = false;
@@ -147,9 +149,6 @@ class _WelcomeState extends State<Welcome> {
   }
 
   getData() async {
-    // var response =
-    //     await Dio().get("https://idms.backend.eastdevs.com/api/routes/3");
-
     var response = await Dio().get(
         "https://idms.backend.eastdevs.com/api/parcels?filters[route][id][\$eq]=1");
     print(response.data['data'][0]);
@@ -173,7 +172,7 @@ class _WelcomeState extends State<Welcome> {
               : int.parse(e["attributes"]["destinationNo"]),
           sendingDate: '',
           deliveryType: e["attributes"]["deliveryType"]);
-      if (parcel.status == "Delivered") {
+      if (parcel.status == "Delivered" || parcel.status == "Failed") {
         deliveredParcelList.add(parcel);
       } else {
         scheduledParcelList.add(parcel);
@@ -198,5 +197,14 @@ class _WelcomeState extends State<Welcome> {
             3, "munib@gmail.com", deliveredParcelList, scheduledParcelList),
       ),
     );
+  }
+
+  Future<void> getProfileImage() async {
+    var response = await Dio().get(
+        "https://idms.backend.eastdevs.com/api/drivers?filters[email][\$eq]=${LoginPage.driver.Email}&populate=image");
+
+    EditProfilePage.profilePic = "https://idms.backend.eastdevs.com" +
+        response.data["data"][0]["attributes"]["image"]["data"]["attributes"]
+            ["formats"]["thumbnail"]["url"];
   }
 }
