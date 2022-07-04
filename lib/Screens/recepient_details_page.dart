@@ -1,5 +1,6 @@
 import 'package:fyp_driver/Models/parcel_model.dart';
 import 'package:fyp_driver/Screens/app_bar.dart';
+import 'package:fyp_driver/Screens/home.dart';
 import 'package:fyp_driver/Screens/summary_page.dart';
 import 'package:flutter/material.dart';
 
@@ -184,35 +185,72 @@ class _RecpientDetailsPageState extends State<RecpientDetailsPage> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
-                child: GestureDetector(
-                  onTap: () {
-                    widget.parcelModel.recievedByName = nameController.text;
-                    widget.parcelModel.recievedByEmail = mailController.text;
-                    widget.parcelModel.recievedByNum = numController.text;
-                    widget.parcelModel.recievedByID = idController.text;
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (builder) => SummaryPage(widget.parcelModel)));
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                      color: Colors.black,
+              Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(40, 0, 10, 0),
+                      child: GestureDetector(
+                        onTap: () {
+                          print("hello fail");
+                          failRequest();
+                        },
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            color: Colors.red,
+                          ),
+                          child: const Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text(
+                                "Fail",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
                     ),
-                    child: const Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Text(
-                          "Confirm",
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.w600),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 0, 40, 0),
+                      child: GestureDetector(
+                        onTap: () {
+                          widget.parcelModel.recievedBy = nameController.text;
+                          widget.parcelModel.recievedByEmail =
+                              mailController.text;
+                          widget.parcelModel.recievedByNum = numController.text;
+                          widget.parcelModel.recievedByID = idController.text;
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (builder) =>
+                                  SummaryPage(widget.parcelModel)));
+                        },
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            color: Colors.black,
+                          ),
+                          child: const Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text(
+                                "Confirm",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
               const SizedBox(
                 height: 40,
@@ -223,4 +261,6 @@ class _RecpientDetailsPageState extends State<RecpientDetailsPage> {
       ),
     );
   }
+
+  void failRequest() async {}
 }

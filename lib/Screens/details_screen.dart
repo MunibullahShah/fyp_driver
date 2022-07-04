@@ -2,7 +2,6 @@ import 'package:fyp_driver/Models/parcel_model.dart';
 import 'package:fyp_driver/Screens/app_bar.dart';
 import 'package:fyp_driver/Screens/recepient_details_page.dart';
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icon.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
