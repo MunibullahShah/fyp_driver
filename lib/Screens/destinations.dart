@@ -17,7 +17,7 @@ class _DestinationsPageState extends State<DestinationsPage> {
         preferredSize: const Size.fromHeight(100),
         child: MyAppBar("Destinations", true),
       ),
-      body: (Welcome.scheduledParcelList.isEmpty)
+      body: (Welcome.scheduledParcelList.length == 0)
           ? Center(
               child: Container(
               child: Text("No Deliveries"),
@@ -94,8 +94,9 @@ class _DestinationsPageState extends State<DestinationsPage> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
-                      color:
-                          parcel.type == "Delivery" ? Colors.green : Colors.red,
+                      color: parcel.type == "Delivered"
+                          ? Colors.green
+                          : Colors.red,
                     ),
                   )
                 ],

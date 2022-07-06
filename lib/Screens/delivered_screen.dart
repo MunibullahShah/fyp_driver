@@ -69,12 +69,13 @@ class _DeliveredScreenState extends State<DeliveredScreen> {
                     ),
                   ),
                   Text(
-                    parcel.type,
+                    parcel.status,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
-                      color:
-                          parcel.type == "Delivery" ? Colors.green : Colors.red,
+                      color: parcel.status == "Delivered"
+                          ? Colors.green
+                          : Colors.red,
                     ),
                   )
                 ],
@@ -100,9 +101,8 @@ class _DeliveredScreenState extends State<DeliveredScreen> {
               padding: const EdgeInsets.all(10.0),
               child: GestureDetector(
                 onTap: () {
-                  var parce = Navigator.of(context).push(MaterialPageRoute(
+                  Navigator.of(context).push(MaterialPageRoute(
                       builder: (builder) => DetailsScreen(parcel)));
-                  print(parce);
                 },
                 child: Column(
                   children: [

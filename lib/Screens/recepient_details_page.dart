@@ -192,8 +192,7 @@ class _RecpientDetailsPageState extends State<RecpientDetailsPage> {
                       padding: const EdgeInsets.fromLTRB(40, 0, 10, 0),
                       child: GestureDetector(
                         onTap: () {
-                          print("hello fail");
-                          failRequest();
+                          // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (builder)=>HomeScreen());
                         },
                         child: Container(
                           decoration: const BoxDecoration(
@@ -213,7 +212,6 @@ class _RecpientDetailsPageState extends State<RecpientDetailsPage> {
                           ),
                         ),
                       ),
-
                     ),
                   ),
                   Expanded(
@@ -261,6 +259,4 @@ class _RecpientDetailsPageState extends State<RecpientDetailsPage> {
       ),
     );
   }
-
-  void failRequest() async {}
 }

@@ -34,19 +34,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 1,
-        actions: [
-          TextButton(
-              onPressed: () {
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
-                    (route) => false);
-              },
-              child: Text(
-                "Logout",
-                style: TextStyle(color: Colors.red),
-              ))
-        ],
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back,
@@ -56,6 +43,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
             Navigator.of(context).pop();
           },
         ),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginPage(),
+                    ),
+                    (route) => false);
+              },
+              child: Text(
+                "Logout",
+                style: TextStyle(color: Colors.red),
+              )),
+        ],
       ),
       body: Form(
         key: _formKey,
@@ -229,7 +231,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   getEmailandData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String? email = prefs.getString("email");
-
     try {
       var resp = await Dio().get(
           "https://idms.backend.eastdevs.com/api/drivers?filters[email][\$eq]=${emailController.text}&filters[password][\$eq]=${passController.text}");
