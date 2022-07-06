@@ -2,11 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:fyp_driver/Models/driver_model.dart';
-import 'package:fyp_driver/Screens/welcome_page.dart';
 import 'package:fyp_driver/reset_page.dart';
 import 'package:modal_progress_hud_alt/modal_progress_hud_alt.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ForgetPage extends StatefulWidget {
   const ForgetPage({Key? key}) : super(key: key);
@@ -16,18 +13,16 @@ class ForgetPage extends StatefulWidget {
 }
 
 class _ForgetPageState extends State<ForgetPage> {
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   TextEditingController emailController = TextEditingController();
-
-  //TextEditingController passController = TextEditingController();
 
   bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(31, 30, 39, 1),
+      backgroundColor: const Color.fromRGBO(31, 30, 39, 1),
       body: ModalProgressHUD(
         inAsyncCall: isLoading,
         color: Colors.green,
@@ -110,7 +105,7 @@ class _ForgetPageState extends State<ForgetPage> {
                       ),
                       errorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: Colors.red,
                         ),
                       ),
@@ -146,8 +141,8 @@ class _ForgetPageState extends State<ForgetPage> {
                           color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
-                        child: Center(
-                          child: const Text(
+                        child: const Center(
+                          child: Text(
                             'Next',
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -169,32 +164,34 @@ class _ForgetPageState extends State<ForgetPage> {
   }
 
   getEmailandData() async {
-    setState(() {
-      isLoading = true;
-    });
-    try {
-      var resp = await Dio().get(
-          "http://idms.backend.eastdevs.com/api/drivers?filters[email][\$eq]=${emailController.text}");
-      if (resp.statusCode == 200) {
-        print(resp.data);
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (builder) => ResetPage(
-                resp.data["data"][0]["id"].toString(),
-                resp.data["data"][0]["attributes"]['q1'].toString(),
-                resp.data["data"][0]["attributes"]['q2'].toString(),
-                resp.data["data"][0]["attributes"]['q3'].toString(),
-                resp.data["data"][0]["attributes"]['a1'].toString(),
-                resp.data["data"][0]["attributes"]['a2'].toString(),
-                resp.data["data"][0]["attributes"]['a3'].toString())));
-      } else {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+      try {
+        var resp = await Dio().get(
+            "http://idms.backend.eastdevs.com/api/drivers?filters[email][\$eq]=${emailController.text}");
+        if (resp.data["data"].toString() != "[]") {
+          print(resp.data);
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (builder) => ResetPage(
+                  resp.data["data"][0]["id"].toString(),
+                  resp.data["data"][0]["attributes"]['q1'].toString(),
+                  resp.data["data"][0]["attributes"]['q2'].toString(),
+                  resp.data["data"][0]["attributes"]['q3'].toString(),
+                  resp.data["data"][0]["attributes"]['a1'].toString(),
+                  resp.data["data"][0]["attributes"]['a2'].toString(),
+                  resp.data["data"][0]["attributes"]['a3'].toString())));
+        } else {
+          Fluttertoast.showToast(msg: "Unable to find driver");
+        }
+      } catch (e) {
         Fluttertoast.showToast(msg: "Unable to find driver");
       }
-    } catch (e) {
-      Fluttertoast.showToast(msg: "Unable to find driver");
+      setState(() {
+        isLoading = false;
+      });
     }
-    setState(() {
-      isLoading = false;
-    });
   }
 }
 
