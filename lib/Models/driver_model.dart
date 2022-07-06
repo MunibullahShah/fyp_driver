@@ -1,5 +1,3 @@
-import 'package:fyp_driver/main.dart';
-
 class DriverModel {
   String id;
   String Name;
@@ -68,3 +66,4 @@ class DriverModel {
         map["a3"].toString());
   }
 }
+

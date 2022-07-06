@@ -122,7 +122,7 @@ class _WelcomeState extends State<Welcome> {
 
   getData() async {
     var response = await Dio().get(
-        "https://idms.backend.eastdevs.com/api/parcels?filters[route][id][\$eq]=1");
+        "https://idms.backend.eastdevs.com/api/parcels?filters[route][id][\$eq]=");
     print(response.data['data'][0]);
     response.data['data'].forEach((e) {
       ParcelModel parcel = ParcelModel(

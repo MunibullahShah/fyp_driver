@@ -20,8 +20,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-  TextEditingController numController = TextEditingController();
-  TextEditingController licenseController = TextEditingController();
+  TextEditingController passController = TextEditingController();
 
   @override
   void initState() {
@@ -50,11 +49,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const LoginPage(),
+                      builder: (context) => LoginPage(),
                     ),
                     (route) => false);
               },
-              child: const Text(
+              child: Text(
                 "Logout",
                 style: TextStyle(color: Colors.red),
               )),
@@ -70,122 +69,124 @@ class _EditProfilePageState extends State<EditProfilePage> {
             },
             child: isLoading
                 ? Center(child: CircularProgressIndicator())
-                : Container(
-                    height: MediaQuery.of(context).size.height,
-                    child: Column(
-                      children: [
-                        const Text(
-                          "Driver Profile",
-                          style: TextStyle(
-                              fontSize: 25, fontWeight: FontWeight.w500),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Center(
-                          child: Stack(
-                            children: [
-                              Container(
-                                width: 130,
-                                height: 130,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 4,
-                                      color: Theme.of(context)
-                                          .scaffoldBackgroundColor),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        spreadRadius: 2,
-                                        blurRadius: 10,
-                                        color: Colors.black.withOpacity(0.1),
-                                        offset: Offset(0, 10))
-                                  ],
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(
-                                      EditProfilePage.profilePic,
-                                    ),
+                : ListView(
+                    children: [
+                      const Text(
+                        "Edit Profile",
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.w500),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Center(
+                        child: Stack(
+                          children: [
+                            Container(
+                              width: 130,
+                              height: 130,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    width: 4,
+                                    color: Theme.of(context)
+                                        .scaffoldBackgroundColor),
+                                boxShadow: [
+                                  BoxShadow(
+                                      spreadRadius: 2,
+                                      blurRadius: 10,
+                                      color: Colors.black.withOpacity(0.1),
+                                      offset: Offset(0, 10))
+                                ],
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(
+                                    EditProfilePage.profilePic,
                                   ),
                                 ),
                               ),
-                              /* Positioned(
-                                  bottom: 0,
-                                  right: 0,
-                                  child: Container(
-                                    height: 40,
-                                    width: 40,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        width: 4,
-                                        color: Theme.of(context)
-                                            .scaffoldBackgroundColor,
-                                      ),
-                                      color:
-                                          const Color.fromRGBO(255, 214, 77, 1),
-                                    ),
-                                    child: const Icon(
-                                      Icons.edit,
-                                      color: Colors.white,
-                                    ),
-                                  )),*/
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Expanded(
-                          child: Container(
-                            child: ListView(
-                              children: [
-                                buildTextField("Name", false, nameController),
-                                buildTextField(
-                                    "E-mail", false, emailController),
-                                buildTextField(
-                                    "Phone num", false, numController),
-                                buildTextField(
-                                    "Address", false, addressController),
-                                buildTextField(
-                                    "License number", false, licenseController),
-                              ],
                             ),
-                          ),
+                            /* Positioned(
+                                bottom: 0,
+                                right: 0,
+                                child: Container(
+                                  height: 40,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      width: 4,
+                                      color: Theme.of(context)
+                                          .scaffoldBackgroundColor,
+                                    ),
+                                    color:
+                                        const Color.fromRGBO(255, 214, 77, 1),
+                                  ),
+                                  child: const Icon(
+                                    Icons.edit,
+                                    color: Colors.white,
+                                  ),
+                                )),*/
+                          ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (builder) =>
-                                    ResetPWScreen(false, LoginPage.driver.id)));
-                          },
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5)),
-                              color: Colors.black,
-                            ),
-                            child: const Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Text(
-                                  "Change Password",
+                      ),
+                      const SizedBox(
+                        height: 35,
+                      ),
+                      buildTextField("Name", false, nameController),
+                      buildTextField("E-mail", false, emailController),
+                      buildTextField("Phone num", false, passController),
+                      buildTextField("Address", false, addressController),
+                      const SizedBox(
+                        height: 35,
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: OutlinedButton(
+                              // padding:
+                              //     const EdgeInsets.symmetric(horizontal: 50),
+                              // shape: RoundedRectangleBorder(
+                              //     borderRadius: BorderRadius.circular(20)),
+                              onPressed: () {
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (builder) => ResetPWScreen(
+                                            false, LoginPage.driver.id)));
+                              },
+                              child: const Text("Change Password",
                                   style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600),
-                                ),
+                                      fontSize: 10,
+                                      letterSpacing: 1,
+                                      color: Colors.black)),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Expanded(
+                            child: RaisedButton(
+                              onPressed: () {
+                                update();
+                              },
+                              color: const Color.fromRGBO(255, 214, 77, 1),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 50),
+                              elevation: 2,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: const Text(
+                                "SAVE",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    letterSpacing: 2.2,
+                                    color: Colors.white),
                               ),
                             ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    ),
+                          )
+                        ],
+                      )
+                    ],
                   ),
           ),
         ),
@@ -227,11 +228,63 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
+  getEmailandData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? email = prefs.getString("email");
+    try {
+      var resp = await Dio().get(
+          "https://idms.backend.eastdevs.com/api/drivers?filters[email][\$eq]=${emailController.text}&filters[password][\$eq]=${passController.text}");
+      if (resp.statusCode == 200) {
+        if (resp.data["meta"]["pagination"]["total"] != 0) {
+          print(resp.data["data"][0]);
+          LoginPage.driver = DriverModel.fromMap(
+              resp.data["data"][0]["id"].toString(),
+              resp.data["data"][0]["attributes"]);
+          prefs.setString("email", emailController.text);
+        } else {
+          Fluttertoast.showToast(msg: "Error in fetching data");
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(msg: e.toString());
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  update() async {
+    setState(() {
+      isLoading = true;
+    });
+    String name = nameController.text;
+    String address = addressController.text;
+    String email = emailController.text;
+    String id = driver.id.toString();
+    try {
+      var response = await Dio()
+          .put("https://idms.backend.eastdevs.com/api/Drivers/$id", data: {
+        "data": {
+          "Name": name,
+          "Address": address,
+          "email": email,
+        }
+      });
+      print("Update $response");
+      Fluttertoast.showToast(msg: "Updated Profile");
+      getEmailandData();
+    } catch (e) {
+      print(e);
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   void writeData() {
     nameController.text = LoginPage.driver.Name;
     emailController.text = LoginPage.driver.Email;
-    numController.text = LoginPage.driver.PhoneNo;
+    passController.text = LoginPage.driver.liscenceNo;
     addressController.text = LoginPage.driver.Address;
-    licenseController.text = LoginPage.driver.liscenceNo;
   }
 }
