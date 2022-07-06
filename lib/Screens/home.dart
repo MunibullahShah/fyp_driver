@@ -1,13 +1,14 @@
-import 'package:fyp_driver/Models/parcel_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp_driver/Screens/delivered_screen.dart';
-import 'package:fyp_driver/Screens/destinations.dart';
+import 'package:fyp_driver/Screens/welcome_page.dart';
+
+import 'destinations.dart';
 
 class HomeScreen extends StatefulWidget {
+  HomeScreen();
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
-
-  HomeScreen();
 }
 
 class _HomeScreenState extends State<HomeScreen> {

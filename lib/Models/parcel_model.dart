@@ -7,13 +7,13 @@ class ParcelModel {
   String address;
   String recieverNum;
   String status;
-  int parcelWeight;
+  double parcelWeight;
   String senderName;
   String senderNum;
   String parcelType;
   String size;
   String type;
-  String recievedByName = "";
+  String recievedBy = "";
   String recievedByNum = "";
   String recievedByEmail = "";
   String recievedByID = "";

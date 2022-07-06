@@ -1,5 +1,3 @@
-import 'package:fyp_driver/main.dart';
-
 class DriverModel {
   String id;
   String Name;

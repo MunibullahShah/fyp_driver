@@ -7,15 +7,13 @@ import '../login_page.dart';
 import 'home.dart';
 
 class Welcome extends StatefulWidget {
-  String driverID;
+  const Welcome({Key? key}) : super(key: key);
 
   static List<ParcelModel> deliveredParcelList = [];
   static List<ParcelModel> scheduledParcelList = [];
 
   @override
   State<Welcome> createState() => _WelcomeState();
-
-  Welcome(this.driverID);
 }
 
 class _WelcomeState extends State<Welcome> {
@@ -26,7 +24,6 @@ class _WelcomeState extends State<Welcome> {
   }
 
   bool isLoading = false;
-  bool isFound = true;
 
   @override
   Widget build(BuildContext context) {
@@ -38,158 +35,101 @@ class _WelcomeState extends State<Welcome> {
               ? Center(
                   child: CircularProgressIndicator(),
                 )
-              : isFound
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Image(
-                          image: AssetImage("assets/pics/aaaa.png"),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        const Text(
-                          "WORK HARD.",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: 'Satisfy',
-                              fontSize: 40),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        const Text(
-                          "Welcome back.",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
-                              fontWeight: FontWeight.w300),
-                        ),
-                        Expanded(
-                          child: Container(),
-                        ),
-                        Container(
-                          child: const Center(
-                            child: Text(
-                              "INTELLIGENT DELIVERY MANAGEMENT SYSTEM",
-                              style: TextStyle(
-                                  color: Color.fromRGBO(255, 214, 77, 1),
-                                  letterSpacing: 1.2,
-                                  wordSpacing: 1.2,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 8),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 5, 20, 20),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: 60,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
-                            ),
-                            child: Center(
-                              child: GestureDetector(
-                                onTap: () {
-                                  isLoading = true;
-                                  setState(() {});
-                                  getData();
-                                },
-                                child: const Text(
-                                  'Start Deliveries',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Color.fromRGBO(31, 30, 39, 1),
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    )
-                  : Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Image(
-                          image: AssetImage("assets/pics/aaaa.png"),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        const Text(
-                          "WORK HARD.",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: 'Satisfy',
-                              fontSize: 40),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        const Text(
-                          "Welcome back.",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
-                              fontWeight: FontWeight.w300),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        const Text(
-                          "No Deliveries for now",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
-                              fontWeight: FontWeight.w300),
-                        ),
-                        Expanded(
-                          child: Container(),
-                        ),
-                        Container(
-                          child: const Center(
-                            child: Text(
-                              "INTELLIGENT DELIVERY MANAGEMENT SYSTEM",
-                              style: TextStyle(
-                                  color: Color.fromRGBO(255, 214, 77, 1),
-                                  letterSpacing: 1.2,
-                                  wordSpacing: 1.2,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 8),
-                            ),
-                          ),
-                        ),
-                      ],
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 20,
                     ),
+                    Image(
+                      image: AssetImage("assets/pics/aaaa.png"),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Text(
+                      "WORK HARD.",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'Satisfy',
+                          fontSize: 40),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    const Text(
+                      "Welcome back.",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontWeight: FontWeight.w300),
+                    ),
+                    Expanded(
+                      child: Container(),
+                    ),
+                    Container(
+                      child: const Center(
+                        child: Text(
+                          "INTELLIGENT DELIVERY MANAGEMENT SYSTEM",
+                          style: TextStyle(
+                              color: Color.fromRGBO(255, 214, 77, 1),
+                              letterSpacing: 1.2,
+                              wordSpacing: 1.2,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 8),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 5, 20, 20),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          getData();
+                          setState(() {
+                            isLoading = false;
+                          });
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 60,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ),
+                          child: Center(
+                            child: const Text(
+                              'Start Deliveries',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Color.fromRGBO(31, 30, 39, 1),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
         ),
       ),
     );
   }
 
   getData() async {
-
     var response = await Dio().get(
-        "https://idms.backend.eastdevs.com/api/parcels?filters[route][id][\$eq]=$routeID");
+        "https://idms.backend.eastdevs.com/api/parcels?filters[route][id][\$eq]=");
     print(response.data['data'][0]);
     response.data['data'].forEach((e) {
       ParcelModel parcel = ParcelModel(
           id: e["id"].toString(),
           receiverName: e["attributes"]["receiverName"],
-          longitude: e["attributes"]["longitude"],
-          latitude: e["attributes"]["latitude"],
+          longitude: double.parse(e["attributes"]["longitude"].toString()),
+          latitude: double.parse(e["attributes"]["latitude"].toString()),
           address: e["attributes"]["address"],
           status: e["attributes"]["status"],
           recieverNum: e["attributes"]["receiverContact"],
@@ -198,19 +138,22 @@ class _WelcomeState extends State<Welcome> {
           parcelType: e["attributes"]["type"],
           size: e["attributes"]["parcelSize"],
           type: e["attributes"]["deliveryType"],
-          parcelWeight: e["attributes"]["parcelWeight"],
+          parcelWeight:
+              double.parse(e["attributes"]["parcelWeight"].toString()),
           destinationNo: e["attributes"]["destinationNo"] == null
               ? 0
               : int.parse(e["attributes"]["destinationNo"]),
           sendingDate: '',
           deliveryType: e["attributes"]["deliveryType"]);
-
-      if (parcel.status == "Delivered" || parcel.status == "Failed") {
-        deliveredParcelList.add(parcel);
-
+      print(parcel);
+      if ((parcel.status == "Delivered" || parcel.status == "Failed") &&
+          !Welcome.deliveredParcelList
+              .any((element) => (element.id == parcel.id))) {
+        Welcome.deliveredParcelList.add(parcel);
       } else {
-        if (!Welcome.scheduledParcelList
-            .any((element) => (element.id == parcel.id))) {
+        if ((parcel.status != "Delivered" || parcel.status != "Failed") &&
+            !Welcome.scheduledParcelList
+                .any((element) => (element.id == parcel.id))) {
           Welcome.scheduledParcelList.add(parcel);
         }
       }
@@ -221,6 +164,9 @@ class _WelcomeState extends State<Welcome> {
     });
     Welcome.scheduledParcelList.sort((p1, p2) {
       return Comparable.compare(p1.destinationNo, p2.destinationNo);
+    });
+    Welcome.deliveredParcelList.forEach((element) {
+      print(element.destinationNo);
     });
     setState(() {
       isLoading = false;
