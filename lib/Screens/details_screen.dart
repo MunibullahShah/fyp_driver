@@ -2,7 +2,6 @@ import 'package:fyp_driver/Models/parcel_model.dart';
 import 'package:fyp_driver/Screens/app_bar.dart';
 import 'package:fyp_driver/Screens/recepient_details_page.dart';
 import 'package:flutter/material.dart';
-import 'package:fyp_driver/constants.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -25,7 +24,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
       ),
       body: ListView(
         children: [
-          Container(
+          SizedBox(
             height: MediaQuery.of(context).size.height * (0.88),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +43,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       padding: const EdgeInsets.fromLTRB(10, 2, 5, 3),
                       child: Text(
                         widget.parcelModel.id,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
                   ],
@@ -52,7 +51,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         color: Color.fromRGBO(31, 30, 39, 1),
                         //Color.fromRGBO(255, 214, 77, 1),
                         borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -61,7 +60,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         Padding(
                           padding: const EdgeInsets.all(3.0),
                           child: Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 color: Color.fromRGBO(58, 57, 62, 0.4),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10))),
@@ -86,14 +85,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                       )
                                     ],
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 10,
                                   ),
                                   smallLabel(
-                                      "Address",
-                                      "House num 123, Block A, LDA Avenue " +
-                                          widget.parcelModel.address),
-                                  SizedBox(
+                                      "Address", widget.parcelModel.address),
+                                  const SizedBox(
                                     height: 10,
                                   ),
                                 ],
@@ -113,7 +110,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     LineIcons.phone,
                                     color: Colors.grey.shade500,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 2,
                                   ),
                                   Text(
@@ -132,7 +129,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     LineIcons.box,
                                     color: Colors.grey.shade500,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 2,
                                   ),
                                   Text(
@@ -151,7 +148,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                     LineIcons.stream,
                                     color: Colors.grey.shade500,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 2,
                                   ),
                                   Text(
@@ -166,7 +163,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             ],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         )
                       ],
@@ -186,48 +183,51 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 const SizedBox(
                   height: 12,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    openMap(widget.parcelModel.latitude,
-                        widget.parcelModel.latitude);
-                  },
-                  child: button(
-                      widget.parcelModel.status == "Delivered"
-                          ? "Show Map"
-                          : widget.parcelModel.status == "Failed"
-                              ? "Start Ride Again"
-                              : "Start Ride",
-                      widget.parcelModel.address),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                (widget.parcelModel.status != "Delivered")
-                    ? GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (builder) =>
-                                  RecpientDetailsPage(widget.parcelModel)));
-                        },
-                        child: button("Deliver", widget.parcelModel.id),
-                      )
-                    : const SizedBox(
-                        height: 1,
-                      ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Center(
-                  child: TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
+                Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        openMap(widget.parcelModel.longitude,
+                            widget.parcelModel.latitude);
                       },
-                      child: Text(
-                        "Back",
-                        style: TextStyle(
-                          fontSize: 20,
+                      child: button(
+                          widget.parcelModel.status == "Delivered"
+                              ? "Show Map"
+                              : widget.parcelModel.status == "Failed"
+                                  ? "Start Ride Again"
+                                  : "Start Ride",
+                          widget.parcelModel.address),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    (widget.parcelModel.status != "Delivered")
+                        ? GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (builder) =>
+                                      RecpientDetailsPage(widget.parcelModel)));
+                            },
+                            child: button("Deliver", widget.parcelModel.id),
+                          )
+                        : const SizedBox(
+                            height: 1,
+                          ),
+                    Center(
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text(
+                          "Back",
+                          style: TextStyle(
+                              fontSize: 17,
+                              color: Color.fromRGBO(31, 30, 39, 1),
+                              fontWeight: FontWeight.bold),
                         ),
-                      )),
+                      ),
+                    ),
+                  ],
                 )
               ],
             ),
@@ -243,18 +243,18 @@ class _DetailsScreenState extends State<DetailsScreen> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: MediaQuery.of(context).size.width / 2 - 30,
             child: Text(
               heading,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
           ),
           Expanded(
             child: Container(
               child: Text(
                 value,
-                style: TextStyle(fontSize: 18),
+                style: const TextStyle(fontSize: 18),
               ),
             ),
           )
@@ -267,8 +267,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
       child: Container(
-        decoration: BoxDecoration(
-            color: Color.fromRGBO(179, 137, 0, 1),
+        decoration: const BoxDecoration(
+            color: Color.fromRGBO(255, 214, 77, 1),
             borderRadius: BorderRadius.all(Radius.circular(10))),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
@@ -278,7 +278,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 height: 55,
                 width: 55,
                 decoration: const BoxDecoration(
-                    shape: BoxShape.circle, color: Colors.grey),
+                  shape: BoxShape.circle,
+                  color: Color.fromRGBO(58, 57, 62, 0.9),
+                ),
                 child: heading == "Start Ride"
                     ? const Icon(
                         Icons.map_outlined,
@@ -297,11 +299,15 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 children: [
                   Text(
                     heading,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 15),
                   ),
                   Text(
                     value,
-                    style: TextStyle(fontSize: 12, color: Colors.grey.shade700),
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w400),
                   )
                 ],
               )
@@ -333,12 +339,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
           heading,
           style: TextStyle(color: Colors.white, fontSize: 15),
         ),
-        SizedBox(
+        const SizedBox(
           height: 2,
         ),
         Text(
           value,
-          style: TextStyle(
+          style: const TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
         )
       ],

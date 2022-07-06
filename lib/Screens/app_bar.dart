@@ -44,8 +44,16 @@ class _MyAppBarState extends State<MyAppBar> {
               child: Container(
                 height: 50,
                 width: 50,
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle, color: Colors.white),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(
+                      EditProfilePage.profilePic,
+                    ),
+                  ),
+                ),
               ),
             ),
           )
