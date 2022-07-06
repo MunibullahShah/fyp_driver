@@ -1,13 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fyp_driver/Screens/profile_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Models/parcel_model.dart';
 import '../login_page.dart';
 import 'home.dart';
 
 class Welcome extends StatefulWidget {
-  const Welcome({Key? key}) : super(key: key);
+  String driverID;
+
+  Welcome(this.driverID);
 
   static List<ParcelModel> deliveredParcelList = [];
   static List<ParcelModel> scheduledParcelList = [];
@@ -121,8 +125,19 @@ class _WelcomeState extends State<Welcome> {
   }
 
   getData() async {
+    print("IDDDDDD:   ${widget.driverID}");
+    var resp = await Dio().get(
+        "https://idms.backend.eastdevs.com/api/routes?filters[driver][id][\$eq]=${widget.driverID}");
+    String routeID = resp.data["data"][0]["id"] == null
+        ? ""
+        : resp.data["data"][0]["id"].toString();
+    if (routeID == "" || routeID == null) {
+      Fluttertoast.showToast(msg: "No deliveries for now", fontSize: 18);
+      return;
+    }
+    print("routeID: $routeID");
     var response = await Dio().get(
-        "https://idms.backend.eastdevs.com/api/parcels?filters[route][id][\$eq]=");
+        "https://idms.backend.eastdevs.com/api/parcels?filters[route][id][\$eq]=${routeID}");
     print(response.data['data'][0]);
     response.data['data'].forEach((e) {
       ParcelModel parcel = ParcelModel(

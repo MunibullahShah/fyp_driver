@@ -1,6 +1,0 @@
-io/flutter/plugins/GeneratedPluginRegistrant.java
- io.flutter.plugins.GeneratedPluginRegistrant
-com/example/fyp_driver/BuildConfig.java
- com.example.fyp_driver.BuildConfig
-com/example/fyp_driver/MainActivity.java
- com.example.fyp_driver.MainActivity

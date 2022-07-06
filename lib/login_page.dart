@@ -284,7 +284,8 @@ class _LoginPageState extends State<LoginPage> {
           prefs.setString("driverID", LoginPage.driver.id);
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (builder) => Welcome(),
+              builder: (builder) =>
+                  Welcome(resp.data["data"][0]["id"].toString()),
             ),
           );
         } else {
